@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+    <display-name>Vezbe09</display-name>
+    
+    <module>
+        <web>
+            <web-uri>Vezbe09.war</web-uri>
+            <context-root>/Vezbe09</context-root>
+        </web>
+    </module>
+
+    <module>
+        <ejb>Vezbe09.jar</ejb>
+    </module>
+</application>
