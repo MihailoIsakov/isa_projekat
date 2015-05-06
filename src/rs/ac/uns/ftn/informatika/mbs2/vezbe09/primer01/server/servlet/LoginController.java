@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Map;
 
 public class LoginController extends HttpServlet {
 
@@ -27,14 +27,15 @@ public class LoginController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jsonData = JsonUtility.pullDataFromRequest(request);
-		System.out.println(jsonData);
+		Map jsonMap = JsonUtility.json2Map(jsonData);
+		System.out.println("Login attempt: " + map);
 
 		try {
+			String username = (String) jsonMap.get("username");
+			String password = (String) jsonMap.get("password");
 
-			String korisnickoIme = request.getParameter("korisnickoIme");
-			String lozinka = request.getParameter("lozinka");
 
-			if ((korisnickoIme == null) || (korisnickoIme.equals("")) || (lozinka == null) || (lozinka.equals(""))) {
+			if ((username == null) || (username.equals("")) || (password == null) || (password.equals(""))) {
 				response.sendRedirect(response.encodeRedirectURL("./login.jsp"));
 				return;
 			}
