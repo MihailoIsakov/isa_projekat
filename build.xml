@@ -64,6 +64,7 @@
 	      <classes dir="build">
 	        <include name="rs/ac/uns/ftn/informatika/mbs2/vezbe09/primer01/server/servlet/*.class"/>
 	        <include name="rs/ac/uns/ftn/informatika/mbs2/vezbe09/primer01/server/entity/*.class"/>
+            <include name="rs/ac/uns/ftn/informatika/mbs2/vezbe09/primer01/server/utils/*.class"/>
 	      	<include name="messages/*.properties"/>  
 	      	<include name="log4j.properties"/>
 	      </classes>
@@ -80,6 +81,7 @@
 			<zipfileset dir="${build}">
 				<include name="rs/ac/uns/ftn/informatika/mbs2/vezbe09/primer01/server/session/*.class"/>
 				<include name="rs/ac/uns/ftn/informatika/mbs2/vezbe09/primer01/server/entity/*.class"/>
+                <include name="rs/ac/uns/ftn/informatika/mbs2/vezbe09/primer01/server/utils/*.class"/>
 			</zipfileset>					
 		</jar>
 	</target>
