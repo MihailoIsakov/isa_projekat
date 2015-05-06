@@ -1,7 +1,5 @@
 package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.Korisnik;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.KorisnikDaoLocal;
@@ -15,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 public class LoginController extends HttpServlet {
@@ -27,9 +26,8 @@ public class LoginController extends HttpServlet {
 	private KorisnikDaoLocal korisnikDao;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		System.out.println("lool");
-//		String jsonData = JsonUtility.pullDataFromRequest(request);
-//		System.out.println(jsonData);
+		String jsonData = JsonUtility.pullDataFromRequest(request);
+		System.out.println(jsonData);
 
 		try {
 
@@ -68,4 +66,5 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, 	HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+
 }
