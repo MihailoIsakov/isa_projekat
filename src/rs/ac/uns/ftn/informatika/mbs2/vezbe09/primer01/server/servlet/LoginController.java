@@ -28,7 +28,7 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jsonData = JsonUtility.pullDataFromRequest(request);
 		Map jsonMap = JsonUtility.json2Map(jsonData);
-		System.out.println("Login attempt: " + map);
+		System.out.println("Login attempt: " + jsonMap);
 
 		try {
 			String username = (String) jsonMap.get("username");
