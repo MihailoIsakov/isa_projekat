@@ -1,8 +1,8 @@
 package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet;
 
 import org.apache.log4j.Logger;
-import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.Korisnik;
-import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.KorisnikDaoLocal;
+import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.User;
+import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.UserDaoLocal;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.utils.JsonUtility;
 
 import javax.ejb.EJB;
@@ -23,7 +23,7 @@ public class LoginController extends HttpServlet {
 	private static Logger log = Logger.getLogger(LoginController.class);
 
 	@EJB
-	private KorisnikDaoLocal korisnikDao;
+	private UserDaoLocal userDao;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jsonData = JsonUtility.pullDataFromRequest(request);
@@ -35,19 +35,23 @@ public class LoginController extends HttpServlet {
 			String password = (String) jsonMap.get("password");
 
 
-			if ((username == null) || (username.equals("")) || (password == null) || (password.equals(""))) {
-				response.sendRedirect(response.encodeRedirectURL("./login.jsp"));
-				return;
-			}
+//			if ((username == null) || (username.equals("")) || (password == null) || (password.equals(""))) {
+//				response.sendRedirect(response.encodeRedirectURL("./login.jsp"));
+//				return;
+//			}
 
-			Korisnik korisnik = korisnikDao.findKorisnikSaKorisnickimImenomILozinkom(korisnickoIme, lozinka);
+			User user = userDao.findUserWithCredentials(username, password);
 
-			if (korisnik != null) {
+			if (user != null) {
+				System.out.println("Found user: " + username);
 				HttpSession session = request.getSession(true);
-				session.setAttribute("admin", korisnik);
-				log.info("Korisnik " + korisnik.getKorisnickoImeKorisnika() + " se prijavio.");
-				getServletContext().getRequestDispatcher("/ReadController").forward(request, response);
+				session.setAttribute("admin", user);
+				log.info("Korisnik " + user.getUsername() + " se prijavio.");
+//				getServletContext().getRequestDispatcher("/ReadController").forward(request, response);
 			}
+            else {
+                System.out.println("No such user");
+            }
 
 		} catch (EJBException e) {
 			if (e.getCause().getClass().equals(NoResultException.class)) {
@@ -55,12 +59,12 @@ public class LoginController extends HttpServlet {
 			} else {
 				throw e;
 			}
-		} catch (ServletException e) {
-			log.error(e);
-			throw e;
-		} catch (IOException e) {
-			log.error(e);
-			throw e;
+//		} catch (ServletException e) {
+//			log.error(e);
+//			throw e;
+//		} catch (IOException e) {
+//			log.error(e);
+//			throw e;
 		}
 	}
 

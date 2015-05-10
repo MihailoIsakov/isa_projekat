@@ -7,7 +7,7 @@ droneshopServices.factory('AuthService', function ($http, Session) {
  
   authService.login = function (credentials) {
     return $http
-      .post('#/LoginController', credentials)
+      .post('/Vezbe09/LoginController', credentials)
       .then(function (res) {
         Session.create(res.data.id, res.data.user.id,
                        res.data.user.role);

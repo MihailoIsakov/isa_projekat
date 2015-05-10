@@ -15,17 +15,12 @@ import javax.persistence.InheritanceType;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-
-@NamedQuery(name = "findKorisnikSaKorisnickimImenomILozinkom", query = "SELECT k FROM User k WHERE k.username like :korisnickoIme AND k.password LIKE :lozinka")
-
-
+@NamedQuery(name = "user.findUserWithCredentials", query = "SELECT k FROM User k WHERE k.username like :user AND k.password LIKE :pass")
 
 @Entity
 @Table(name="users")
-// ovom anotacijom se naglasava mapiranje tipa "jedna tabela po svakoj klasi"
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class User {
-
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
