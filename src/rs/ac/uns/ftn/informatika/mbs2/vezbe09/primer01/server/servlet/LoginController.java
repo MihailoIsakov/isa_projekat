@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class LoginController extends HttpServlet {
@@ -47,7 +48,14 @@ public class LoginController extends HttpServlet {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("admin", user);
 				log.info("Korisnik " + user.getUsername() + " se prijavio.");
-//				getServletContext().getRequestDispatcher("/ReadController").forward(request, response);
+
+                response.setContentType("application/json");
+                Map<String, String> jsonResponse = new HashMap<>();
+                jsonResponse.put("sid", request.getSession().getId());
+                jsonResponse.put("userid", Integer.toString(user.getId()));
+                jsonResponse.put("userrole", "admin");
+
+                JsonUtility.flushJson(response, jsonResponse);
 			}
             else {
                 System.out.println("No such user");
