@@ -25,7 +25,7 @@
 
 </head>
 
-<body>
+<body ng-controller='ApplicationController'>
 
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller='LoginCtrl'>
@@ -42,7 +42,7 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="navbar-right" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav" ng-if='!username'>
+                <ul class="nav navbar-nav" ng-if='!currentUser'>
                     <li>
                         <a href="#/register">Register</a>
                     </li>
@@ -50,12 +50,12 @@
                         <a href="#/login">Login</a>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav" ng-if='username'>
+                <ul class="nav navbar-nav" ng-if='currentUser'>
                     <li>
-                        <a href="#/logout">Logout</a>
+                        <a href="#/" ng-click="logout()">Logout</a>
                     </li>
                     <li>
-                        <a href="#/user/{{username}}">{{username}}</a>
+                        <a href="#/user/{{username}}">{{currentUser.username}}</a>
                     </li>
                 </ul>
             </div>

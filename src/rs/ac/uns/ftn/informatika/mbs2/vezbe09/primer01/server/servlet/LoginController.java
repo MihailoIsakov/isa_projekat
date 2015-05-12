@@ -3,7 +3,7 @@ package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet;
 import org.apache.log4j.Logger;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.User;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.UserDaoLocal;
-import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.utils.JsonUtility;
+import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.utils.RESTUtility;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -27,38 +27,35 @@ public class LoginController extends HttpServlet {
 	private UserDaoLocal userDao;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String jsonData = JsonUtility.pullDataFromRequest(request);
-		Map jsonMap = JsonUtility.json2Map(jsonData);
+		String jsonData = RESTUtility.pullDataFromRequest(request);
+		Map jsonMap = RESTUtility.json2Map(jsonData);
 		System.out.println("Login attempt: " + jsonMap);
+
+        // In case the user is trying to log off
+        if (jsonMap.get("logout") != null) {
+            log.info("User " + request.getSession(true).getAttribute("user"));
+            request.getSession(true).invalidate();
+        }
 
 		try {
 			String username = (String) jsonMap.get("username");
 			String password = (String) jsonMap.get("password");
-
-
-//			if ((username == null) || (username.equals("")) || (password == null) || (password.equals(""))) {
-//				response.sendRedirect(response.encodeRedirectURL("./login.jsp"));
-//				return;
-//			}
-
 			User user = userDao.findUserWithCredentials(username, password);
 
 			if (user != null) {
 				System.out.println("Found user: " + username);
 				HttpSession session = request.getSession(true);
 				session.setAttribute("admin", user);
-				log.info("Korisnik " + user.getUsername() + " se prijavio.");
+				log.info("User " + user.getUsername() + " has logged in.");
 
-                response.setContentType("application/json");
-                Map<String, String> jsonResponse = new HashMap<>();
-                jsonResponse.put("sid", request.getSession().getId());
-                jsonResponse.put("userid", Integer.toString(user.getId()));
-                jsonResponse.put("userrole", "admin");
-
-                JsonUtility.flushJson(response, jsonResponse);
+                Map<String, Object> jsonResponse = new HashMap<>();
+                jsonResponse.put("sessionid", request.getSession().getId());
+                jsonResponse.put("user", user);
+                RESTUtility.flushJson(response, jsonResponse);
 			}
             else {
                 System.out.println("No such user");
+                response.sendError(403);
             }
 
 		} catch (EJBException e) {
@@ -67,12 +64,6 @@ public class LoginController extends HttpServlet {
 			} else {
 				throw e;
 			}
-//		} catch (ServletException e) {
-//			log.error(e);
-//			throw e;
-//		} catch (IOException e) {
-//			log.error(e);
-//			throw e;
 		}
 	}
 

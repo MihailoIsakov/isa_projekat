@@ -9,11 +9,14 @@ droneshopServices.factory('AuthService', function ($http, Session) {
     return $http
       .post('/Vezbe09/LoginController', credentials)
       .then(function (res) {
-          Session.create(res.data.sid, res.data.userid, res.data.userrole);
-       // Session.create(res.data.id, res.data.user.id,
-       //                res.data.user.role);
+          Session.create(res.data.sessionid, res.data.user.id, res.data.user.role);
         return res.data.user;
       });
+  };
+
+  authService.logout = function() {
+    $http.post('Vezbe09/LoginController', {"logout":true});
+    Session.destroy();
   };
  
   authService.isAuthenticated = function () {
@@ -44,3 +47,11 @@ droneshopServices.service('Session', function () {
     this.userRole = null;
   };
 })
+
+droneshopServices.factory('Category', ['$resource',
+  function($resource){
+    return $resource('/Vezbe09/category/', {}, {
+      query: {method:'GET', isArray:true}
+    });
+  }]);
+ 

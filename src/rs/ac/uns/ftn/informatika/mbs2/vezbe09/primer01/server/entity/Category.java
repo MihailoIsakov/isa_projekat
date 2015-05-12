@@ -19,7 +19,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @NamedQuery(name = "findCategoryByName", query = "SELECT k FROM Category k WHERE k.name like :name")
 
-
 @Entity
 @Table(name = "categories")
 public class Category implements Serializable {

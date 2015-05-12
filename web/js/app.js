@@ -9,13 +9,18 @@ droneshopApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/', {
-                templateUrl: 'partials/catalog.html'
+                templateUrl: 'partials/catalog.html',
+                controller: 'CatalogCtrl'
             }).
             when('/login', {
                 templateUrl: 'partials/login.html'
             }).
             otherwise('/');
     }]);
+
+droneshopApp.config(function($resourceProvider) {
+    $resourceProvider.defaults.stripTrailingSlashes = false;
+});
 
 droneshopApp.constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',
