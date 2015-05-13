@@ -39,6 +39,7 @@ droneshopControllers
 .controller('CategoryCtrl', 
     function($scope, Category) {
         $scope.categories = Category.query();
+        $scope.text = "mika";
     })
 
 .controller('OfferCtrl', ['$scope', '$routeParams', 'Offer',
