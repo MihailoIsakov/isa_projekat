@@ -36,10 +36,10 @@ droneshopControllers
   };
 })
 
-.controller('CatalogCtrl',
-    function($scope, Category) {
-        $scope.category = Category.query({categoryid: $routeParams.categoryid});
-    }).
+.controller('CatalogCtrl', ['$scope', '$routeParams', 'OffersInCategory',
+    function($scope, $routeParams, OffersInCategory) {
+        $scope.offers = OffersInCategory.query({categoryid: $routeParams.categoryid});
+    }])
 
 .controller('CategoryCtrl', 
     function($scope, Category) {
@@ -48,6 +48,5 @@ droneshopControllers
 
 .controller('OfferCtrl', ['$scope', '$routeParams', 'Offer',
     function($scope, $routeParams, Offer) {
-        $scope.offerid = $routeParams.offerid;
         $scope.offer = Offer.get({offerid: $routeParams.offerid});
     }]);

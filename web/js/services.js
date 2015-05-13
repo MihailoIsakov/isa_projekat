@@ -48,6 +48,11 @@ droneshopServices.service('Session', function () {
   };
 })
 
+droneshopServices.factory('OffersInCategory', ['$resource',
+    function($resource) {
+        return $resource('offer/', {category: "@categoryid"});
+    }]);
+
 droneshopServices.factory('Category', ['$resource',
   function($resource){
     return $resource('category/:categoryid', {}, {
@@ -58,6 +63,6 @@ droneshopServices.factory('Category', ['$resource',
 droneshopServices.factory('Offer', ['$resource',
     function($resource) {
         return $resource('offer/:offerid', {}, {
-            get: {method: 'GET', params:{offerid: 'popular'}}
+            get: {method: 'GET'}
     })
 }]);
