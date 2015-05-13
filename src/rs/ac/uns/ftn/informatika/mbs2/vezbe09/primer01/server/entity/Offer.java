@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -9,6 +11,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +27,7 @@ import javax.persistence.TemporalType;
 
 @NamedQueries( { @NamedQuery(name = "findOfferByName", query = "SELECT k FROM Offer k WHERE k.name like :name")
 ,@NamedQuery(name = "findActiveOffers", query = "SELECT k FROM Offer k WHERE k.active = true")
+,@NamedQuery(name = "findOffersByCategory", query = "SELECT k FROM Offer k WHERE k.category = :category")
 ,@NamedQuery(name = "findOffersByManager", query = "SELECT k FROM Offer k WHERE k.manager = :manager")})
 
 
@@ -90,6 +94,7 @@ public class Offer implements Serializable {
 	@JoinColumn(name = "manager_id", referencedColumnName = "user_id", nullable = false)
 	private Seller manager;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
 	private Category category;

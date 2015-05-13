@@ -14,6 +14,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -34,7 +35,7 @@ public class Category implements Serializable {
 	@Column(name = "cat_desc", unique = false, nullable = true)
 	private String description;
 
-	@OneToMany(cascade = { ALL }, fetch = LAZY, mappedBy = "category")
+	@OneToMany(cascade = { ALL }, fetch = EAGER, mappedBy = "category")
 	private Set<Offer> offers = new HashSet<Offer>();
 
 	public void add(Offer p) {
