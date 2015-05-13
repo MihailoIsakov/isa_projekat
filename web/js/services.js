@@ -7,7 +7,7 @@ droneshopServices.factory('AuthService', function ($http, Session) {
  
   authService.login = function (credentials) {
     return $http
-      .post('/Vezbe09/LoginController', credentials)
+      .post('LoginController', credentials)
       .then(function (res) {
           Session.create(res.data.sessionid, res.data.user.id, res.data.user.role);
         return res.data.user;
@@ -15,7 +15,7 @@ droneshopServices.factory('AuthService', function ($http, Session) {
   };
 
   authService.logout = function() {
-    $http.post('Vezbe09/LoginController', {"logout":true});
+    $http.post('LoginController', {"logout":true});
     Session.destroy();
   };
  
@@ -50,14 +50,14 @@ droneshopServices.service('Session', function () {
 
 droneshopServices.factory('Category', ['$resource',
   function($resource){
-    return $resource('/Vezbe09/category/', {}, {
+    return $resource('category/', {}, {
       query: {method:'GET', isArray:true}
     });
   }]);
  
 droneshopServices.factory('Offer', ['$resource',
     function($resource) {
-        return $resource('/Vezbe09/offer/:offerid', {}, {
+        return $resource('offer/:offerid', {}, {
             get: {method: 'GET', params:{offerid: 'popular'}}
     })
 }]);
