@@ -44,5 +44,5 @@ droneshopControllers
 .controller('OfferCtrl', ['$scope', '$routeParams', 'Offer',
     function($scope, $routeParams, Offer) {
         $scope.offerid = $routeParams.offerid;
-        $scope.offer = Offer.get({offerid: $routeParams.offerid);
-    });
+        $scope.offer = Offer.get({offerid: $routeParams.offerid});
+    }]);
