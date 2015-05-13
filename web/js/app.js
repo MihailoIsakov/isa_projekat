@@ -12,6 +12,10 @@ droneshopApp.config(['$routeProvider',
                 templateUrl: 'partials/catalog.html'
                 //controller: 'CatalogCtrl'
             }).
+            when('category/:categoryid', {
+                templateUrl: 'partials/catalog.html',
+                controller: 'CatalogCtrl'
+            }).
             when('/offer/:offerid', {
                 templateUrl: 'partials/offer.html',
                 controller: 'OfferCtrl'

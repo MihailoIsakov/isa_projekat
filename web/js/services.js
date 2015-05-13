@@ -50,7 +50,7 @@ droneshopServices.service('Session', function () {
 
 droneshopServices.factory('Category', ['$resource',
   function($resource){
-    return $resource('category/', {}, {
+    return $resource('category/:categoryid', {}, {
       query: {method:'GET', isArray:true}
     });
   }]);

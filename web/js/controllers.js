@@ -36,6 +36,11 @@ droneshopControllers
   };
 })
 
+.controller('CatalogCtrl',
+    function($scope, Category) {
+        $scope.category = Category.query({categoryid: $routeParams.categoryid});
+    }).
+
 .controller('CategoryCtrl', 
     function($scope, Category) {
         $scope.categories = Category.query();
