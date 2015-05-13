@@ -35,7 +35,7 @@ public class Category implements Serializable {
 	@Column(name = "cat_desc", unique = false, nullable = true)
 	private String description;
 
-	@OneToMany(cascade = { ALL }, fetch = EAGER, mappedBy = "category")
+	@OneToMany(cascade = { ALL }, fetch = LAZY, mappedBy = "category")
 	private Set<Offer> offers = new HashSet<Offer>();
 
 	public void add(Offer p) {

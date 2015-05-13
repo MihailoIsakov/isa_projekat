@@ -34,10 +34,15 @@ droneshopControllers
   $scope.setCurrentUser = function (user) {
     $scope.currentUser = user;
   };
-  $scope.categories = Category.query();
 })
 
-.controller('CatalogCtrl', 
+.controller('CategoryCtrl', 
     function($scope, Category) {
         $scope.categories = Category.query();
+    })
+
+.controller('OfferCtrl', ['$scope', '$routeParams', 'Offer',
+    function($scope, $routeParams, Offer) {
+        $scope.offerid = $routeParams.offerid;
+        $scope.offer = Offer.get({offerid: $routeParams.offerid);
     });

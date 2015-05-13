@@ -55,3 +55,8 @@ droneshopServices.factory('Category', ['$resource',
     });
   }]);
  
+droneshopServices.factory('Offer', ['$resource',
+    function($resource) {
+        return $resource('/Vezbe09/offer/:offerid'), {}, {
+            get: {method: 'GET', params:{offerid}}
+    }]);
