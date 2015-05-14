@@ -20,6 +20,11 @@
       <servlet-name>LoginController</servlet-name>
       <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.LoginController</servlet-class>
    </servlet>
+   
+   <servlet>
+      <servlet-name>CartServlet</servlet-name>
+      <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.CartServlet</servlet-class>
+   </servlet>
 
    <servlet-mapping>
       <servlet-name>CategoryServlet</servlet-name>
@@ -39,6 +44,11 @@
    <servlet-mapping>
       <servlet-name>LoginController</servlet-name>
       <url-pattern>/LoginController</url-pattern>
+   </servlet-mapping>
+   
+   <servlet-mapping>
+      <servlet-name>CartServlet</servlet-name>
+      <url-pattern>/cart</url-pattern>
    </servlet-mapping>
    
    <servlet-mapping>

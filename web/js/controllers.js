@@ -10,6 +10,7 @@ droneshopControllers
         AuthService.login(credentials).then(function (user) {
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             $scope.setCurrentUser(user);
+            $scope.role = AuthService.role();
             $scope.error = false;
         }, function () {
             $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
@@ -46,9 +47,13 @@ droneshopControllers
         $scope.categories = Category.query();
     })
 
-.controller('OfferCtrl', ['$scope', '$routeParams', 'Offer',
-    function($scope, $routeParams, Offer) {
+.controller('OfferCtrl', ['$scope', '$routeParams', '$http', 'Offer',
+    function($scope, $routeParams, $http, Offer) {
         $scope.offer = Offer.get({offerid: $routeParams.offerid});
+        $scope.sendComment = function() {
+            $http.post("offer/"+$routeParams.offerid, {comment: $scope.commentInput});
+            $scope.commentInput = "";
+        }
     }])
 
 .controller('RegisterCtrl', ['$scope', 'RegisterService',
@@ -63,4 +68,10 @@ droneshopControllers
                 .then(function () {$scope.success = true; },
                       function () {$scope.error = true; })
         }
-    }]);
+    }])
+
+.controller('CartCtrl', ['$scope', 'Cart',
+    function($scope, Cart) {
+        $scope.payments = Cart.query();
+    }
+]);

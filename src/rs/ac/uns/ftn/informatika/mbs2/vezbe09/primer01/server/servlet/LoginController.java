@@ -1,6 +1,9 @@
 package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet;
 
 import org.apache.log4j.Logger;
+import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.Admin;
+import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.Buyer;
+import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.Seller;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.User;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.UserDaoLocal;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.utils.RESTUtility;
@@ -45,12 +48,20 @@ public class LoginController extends HttpServlet {
 			if (user != null) {
 				System.out.println("Found user: " + username);
 				HttpSession session = request.getSession(true);
-				session.setAttribute("admin", user);
+				session.setAttribute("user", user);
 				log.info("User " + user.getUsername() + " has logged in.");
 
                 Map<String, Object> jsonResponse = new HashMap<>();
                 jsonResponse.put("sessionid", request.getSession().getId());
                 jsonResponse.put("user", user);
+
+				String role = "";
+				if (user instanceof Buyer) role = "buyer";
+				else if (user instanceof Seller) role = "seller";
+				else if (user instanceof Admin) role = "admin";
+
+				jsonResponse.put("role", role);
+
                 RESTUtility.flushJson(response, jsonResponse);
 			}
             else {

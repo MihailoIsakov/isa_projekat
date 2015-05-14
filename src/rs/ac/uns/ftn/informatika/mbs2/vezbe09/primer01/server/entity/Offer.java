@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import static javax.persistence.CascadeType.ALL;
@@ -79,6 +80,7 @@ public class Offer implements Serializable {
 	@Column(name = "offer_active", unique = false, nullable = true)
 	private boolean active;
 
+	@JsonBackReference
 	@OneToMany(cascade = { ALL }, fetch = EAGER, mappedBy = "offer")
 	private Set<Payment> payments = new HashSet<Payment>();
 

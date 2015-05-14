@@ -1,8 +1,8 @@
 package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet;
 
-import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.Category;
-import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.Offer;
+import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.*;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.CategoryDaoLocal;
+import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.CommentDaoLocal;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.OfferDaoLocal;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.utils.RESTUtility;
 
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zieghailo on 5/12/15.
@@ -27,8 +28,30 @@ public class OfferServlet extends HttpServlet {
     @EJB
     private CategoryDaoLocal categoryDao;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @EJB
+    private CommentDaoLocal commentDao;
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = RESTUtility.parseURL(request.getPathInfo());
+
+        String jsonData = RESTUtility.pullDataFromRequest(request);
+        Map jsonMap = RESTUtility.json2Map(jsonData);
+
+        if (jsonMap.containsKey("comment")) {
+            String message = (String) jsonMap.get("comment");
+            Offer offer = offerDao.findById(id);
+            User buyer = (User) request.getSession().getAttribute("user");
+
+            if (buyer instanceof Buyer) {
+                Comment comment = new Comment(message, offer, (Buyer) buyer);
+                commentDao.persist(comment);
+            }
+        }
+
+        // Add to cart logic
+        if (request.getPathInfo().contains("buy")) {
+
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

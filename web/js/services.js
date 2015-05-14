@@ -9,9 +9,13 @@ droneshopServices.factory('AuthService', function ($http, Session) {
     return $http
       .post('LoginController', credentials)
       .then(function (res) {
-          Session.create(res.data.sessionid, res.data.user.id, res.data.user.role);
+          Session.create(res.data.sessionid, res.data.user.id, res.data.role);
         return res.data.user;
       });
+  };
+
+  authService.role = function() {
+      return Session.userRole;
   };
 
   authService.logout = function() {
@@ -76,3 +80,10 @@ droneshopServices.factory('Offer', ['$resource',
             get: {method: 'GET'}
     })
 }]);
+
+droneshopServices.factory('Cart', ['$resource',
+    function($resource) {
+        return $resource('cart', {}, {
+            query: {method: 'GET', isArray:true}
+        })
+    }]);

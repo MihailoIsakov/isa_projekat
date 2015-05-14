@@ -1,0 +1,31 @@
+<div class="container">
+    
+    <div class="row">
+
+        <div class="col-md-3" ng-include="'partials/categories-sidebar.html'"> </div>
+
+        <div class="col-md-9">
+
+            <p class="lead">Your payments: </p>
+
+            <table class="table table-bordered"> 
+                <th>Payment ID</th> 
+                <th>Offer ID</th> 
+                <th>Offer</th>
+                <th>Price</th> 
+            
+                <tr ng-repeat"payment in payments">
+                    <td>{{payment.id}}</td>
+                    <td>{{payment.offer.id}}</td>
+                    <td>{{payment.offer.name}}</td>
+                    <td>{{payment.price}}</td>
+                </tr>
+                    
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+

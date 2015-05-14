@@ -43,6 +43,12 @@ public class Comment implements Serializable {
 	public Comment() {
 	}
 
+	public Comment(String message, Offer offer, Buyer buyer) {
+		this.message = message;
+		this.offer = offer;
+		this.buyer = buyer;
+	}
+
 	public Integer getId() {
 		return id;
 	}

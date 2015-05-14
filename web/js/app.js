@@ -20,6 +20,10 @@ droneshopApp.config(['$routeProvider',
                 templateUrl: 'partials/offer.html',
                 controller: 'OfferCtrl'
             }).
+            when('/cart', {
+                templateUrl: 'partials/cart.html',
+                controller: 'CartCtrl'
+            }).
             when('/login', {
                 templateUrl: 'partials/login.html'
             }).
