@@ -10,6 +10,11 @@
       <servlet-name>OfferServlet</servlet-name>
       <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.OfferServlet</servlet-class>
    </servlet>
+   
+   <servlet>
+      <servlet-name>RegisterServlet</servlet-name>
+      <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.RegisterServlet</servlet-class>
+   </servlet>
 
    <servlet>
       <servlet-name>PrepareUpdateController</servlet-name>
@@ -56,6 +61,11 @@
       <url-pattern>/offer/*</url-pattern>
    </servlet-mapping>
 
+   <servlet-mapping>
+      <servlet-name>RegisterServlet</servlet-name>
+      <url-pattern>/RegisterServlet</url-pattern>
+   </servlet-mapping> 
+   
    <servlet-mapping>
       <servlet-name>PrepareUpdateController</servlet-name>
       <url-pattern>/PrepareUpdateController</url-pattern>

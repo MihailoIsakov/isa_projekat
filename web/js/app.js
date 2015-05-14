@@ -23,6 +23,10 @@ droneshopApp.config(['$routeProvider',
             when('/login', {
                 templateUrl: 'partials/login.html'
             }).
+            when('/register', {
+                templateUrl: 'partials/register.html',
+                controller: 'RegisterCtrl'
+            }).
             otherwise('/');
     }]);
 

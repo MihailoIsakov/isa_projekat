@@ -49,4 +49,18 @@ droneshopControllers
 .controller('OfferCtrl', ['$scope', '$routeParams', 'Offer',
     function($scope, $routeParams, Offer) {
         $scope.offer = Offer.get({offerid: $routeParams.offerid});
+    }])
+
+.controller('RegisterCtrl', ['$scope', 'RegisterService',
+    function($scope, RegisterService) {
+        $scope.userData = {username: '', password: '', firstName: '', lastName: '', phoneNumber: '', address: '', email: ''};
+
+        $scope.success = false;
+        $scope.error = false;
+
+        $scope.register = function(userData) {
+            RegisterService.register(userData)
+                .then(function () {$scope.success = true; },
+                      function () {$scope.error = true; })
+        }
     }]);

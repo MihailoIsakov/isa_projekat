@@ -32,8 +32,18 @@ droneshopServices.factory('AuthService', function ($http, Session) {
   };
  
   return authService;
-})
+});
 
+droneshopServices.factory('RegisterService', function($http) {
+    var registerService = {};
+
+    registerService.register = function (userData) {
+        return $http.post('RegisterServlet', userData)
+    };
+
+    return registerService;
+})
+    
 
 droneshopServices.service('Session', function () {
   this.create = function (sessionId, userId, userRole) {
