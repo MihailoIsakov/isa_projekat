@@ -17,38 +17,8 @@
    </servlet>
 
    <servlet>
-      <servlet-name>PrepareUpdateController</servlet-name>
-      <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.PrepareUpdateController</servlet-class>
-   </servlet>
-   
-   <servlet>
-      <servlet-name>PrepareCreateController</servlet-name>
-      <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.PrepareCreateController</servlet-class>
-   </servlet>
-   
-   <servlet>
-      <servlet-name>CreateController</servlet-name>
-      <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.CreateController</servlet-class>
-   </servlet>
-   
-   <servlet>
-      <servlet-name>UpdateController</servlet-name>
-      <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.UpdateController</servlet-class>
-   </servlet>
-   
-   <servlet>
       <servlet-name>LoginController</servlet-name>
       <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.LoginController</servlet-class>
-   </servlet>
-   
-   <servlet>
-      <servlet-name>ReadController</servlet-name>
-      <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.ReadController</servlet-class>
-   </servlet>
-   
-   <servlet>
-      <servlet-name>DeleteController</servlet-name>
-      <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.DeleteController</servlet-class>
    </servlet>
 
    <servlet-mapping>
@@ -65,42 +35,12 @@
       <servlet-name>RegisterServlet</servlet-name>
       <url-pattern>/RegisterServlet</url-pattern>
    </servlet-mapping> 
-   
-   <servlet-mapping>
-      <servlet-name>PrepareUpdateController</servlet-name>
-      <url-pattern>/PrepareUpdateController</url-pattern>
-   </servlet-mapping>
-   
-   <servlet-mapping>
-      <servlet-name>PrepareCreateController</servlet-name>
-      <url-pattern>/PrepareCreateController</url-pattern>
-   </servlet-mapping>
-   
-   <servlet-mapping>
-      <servlet-name>CreateController</servlet-name>
-      <url-pattern>/CreateController</url-pattern>
-   </servlet-mapping>
-   
-   <servlet-mapping>
-      <servlet-name>UpdateController</servlet-name>
-      <url-pattern>/UpdateController</url-pattern>
-   </servlet-mapping>
-   
+
    <servlet-mapping>
       <servlet-name>LoginController</servlet-name>
       <url-pattern>/LoginController</url-pattern>
    </servlet-mapping>
    
-   <servlet-mapping>
-      <servlet-name>ReadController</servlet-name>
-      <url-pattern>/ReadController</url-pattern>
-   </servlet-mapping>
-   
-   <servlet-mapping>
-      <servlet-name>DeleteController</servlet-name>
-      <url-pattern>/DeleteController</url-pattern>
-   </servlet-mapping>
-
    <servlet-mapping>
        <servlet-name>default</servlet-name>
        <url-pattern>/*</url-pattern>

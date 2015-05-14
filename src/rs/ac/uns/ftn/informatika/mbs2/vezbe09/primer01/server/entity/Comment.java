@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -29,6 +31,7 @@ public class Comment implements Serializable {
 	@Column(name = "comment_msg", unique = false, nullable = true)
 	private String message;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "offer_id", referencedColumnName = "offer_id", nullable = false)
 	private Offer offer;

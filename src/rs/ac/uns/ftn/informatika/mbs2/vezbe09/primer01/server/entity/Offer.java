@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -78,16 +79,16 @@ public class Offer implements Serializable {
 	@Column(name = "offer_active", unique = false, nullable = true)
 	private boolean active;
 
-	@OneToMany(cascade = { ALL }, fetch = LAZY, mappedBy = "offer")
+	@OneToMany(cascade = { ALL }, fetch = EAGER, mappedBy = "offer")
 	private Set<Payment> payments = new HashSet<Payment>();
 
-	@OneToMany(cascade = { ALL }, fetch = LAZY, mappedBy = "offer")
+	@OneToMany(cascade = { ALL }, fetch = EAGER, mappedBy = "offer")
 	private Set<Coupon> coupons = new HashSet<Coupon>();
 
-	@OneToMany(cascade = { ALL }, fetch = LAZY, mappedBy = "offer")
+	@OneToMany(cascade = { ALL }, fetch = EAGER, mappedBy = "offer")
 	private Set<Comment> comments = new HashSet<Comment>();
 
-	@OneToMany(cascade = { ALL }, fetch = LAZY, mappedBy = "offer")
+	@OneToMany(cascade = { ALL }, fetch = EAGER, mappedBy = "offer")
 	private Set<Image> images = new HashSet<Image>();
 
 	@ManyToOne

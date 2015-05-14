@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -49,6 +51,7 @@ public class Image implements Serializable {
 	@Column(name = "image_data", unique = false, nullable = true)
 	private byte[] imageData;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "offer_id", referencedColumnName = "offer_id", nullable = false)
 	private Offer offer;

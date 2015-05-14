@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
@@ -39,6 +41,7 @@ public class Coupon implements Serializable {
 	@Column(name = "coupon_validto", unique = false, nullable = false)
 	private Date validTo;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "offer_id", referencedColumnName = "offer_id", nullable = false)
 	private Offer offer;

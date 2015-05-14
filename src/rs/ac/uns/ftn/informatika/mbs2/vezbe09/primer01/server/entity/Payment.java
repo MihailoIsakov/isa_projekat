@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
@@ -32,6 +34,7 @@ public class Payment implements Serializable {
 	@Column(name = "payment_price", unique = false, nullable = false)
 	private double price;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "offer_id", referencedColumnName = "offer_id", nullable = false)
 	private Offer offer;
