@@ -115,6 +115,11 @@ public class RESTUtility {
 //        throw (new IllegalArgumentException("The passed URL is mismatched. "));
     }
 
+    public static int getId(String url) throws IllegalArgumentException {
+        String idstr = url.replaceAll("\\D+", "");
+        return Integer.parseInt(idstr);
+    }
+
     private static Matcher matcher;
     private static Pattern regexIDPattern = Pattern.compile("/([0-9]+)");
     private static ObjectMapper mapper = new ObjectMapper();

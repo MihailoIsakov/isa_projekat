@@ -4,6 +4,7 @@ import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.*;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.CategoryDaoLocal;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.CommentDaoLocal;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.OfferDaoLocal;
+import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.PaymentDaoLocal;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.utils.RESTUtility;
 
 import javax.ejb.EJB;
@@ -14,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by zieghailo on 5/12/15.
@@ -31,27 +31,38 @@ public class OfferServlet extends HttpServlet {
     @EJB
     private CommentDaoLocal commentDao;
 
+    @EJB
+    private PaymentDaoLocal paymentDao;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = RESTUtility.parseURL(request.getPathInfo());
+        String url = request.getPathInfo();
+        int id = RESTUtility.getId(url);
+
+        Offer offer = offerDao.findById(id);
 
         String jsonData = RESTUtility.pullDataFromRequest(request);
-        Map jsonMap = RESTUtility.json2Map(jsonData);
 
-        if (jsonMap.containsKey("comment")) {
-            String message = (String) jsonMap.get("comment");
-            Offer offer = offerDao.findById(id);
+        // URL: /offer/:offerid/comment
+        if (url.contains("comment")) {
+            String message = jsonData;
             User buyer = (User) request.getSession().getAttribute("user");
 
             if (buyer instanceof Buyer) {
                 Comment comment = new Comment(message, offer, (Buyer) buyer);
                 commentDao.persist(comment);
+                response.setStatus(201);
             }
         }
 
-        // Add to cart logic
-        if (request.getPathInfo().contains("buy")) {
+        // URL: /offer/:offerid/buy
+        if (url.contains("buy") &&
+            request.getSession().getAttribute("user") instanceof Buyer)
+            {
+                Payment payment = new Payment(offer.getSalePrice(), offer, (Buyer) request.getSession().getAttribute("user"));
+                paymentDao.persist(payment);
+                response.setStatus(201);
+            }
 
-        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

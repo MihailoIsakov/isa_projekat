@@ -33,7 +33,14 @@ public class Payment implements Serializable {
 	@JoinColumn(name = "buyer_id", referencedColumnName = "user_id", nullable = false)
 	private Buyer buyer;
 
+	public Payment(double price, Offer offer, Buyer buyer) {
+		this.price = price;
+		this.offer = offer;
+		this.buyer = buyer;
+	}
+
 	public Payment() {
+
 	}
 
 	public Integer getId() {

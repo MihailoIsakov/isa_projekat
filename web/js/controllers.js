@@ -9,8 +9,7 @@ droneshopControllers
     $scope.login = function (credentials) {
         AuthService.login(credentials).then(function (user) {
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-            $scope.setCurrentUser(user);
-            $scope.role = AuthService.role();
+            $scope.setCurrentUser(user, AuthService.role());
             $scope.error = false;
         }, function () {
             $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
@@ -32,8 +31,9 @@ droneshopControllers
   $scope.userRoles = USER_ROLES;
   $scope.isAuthorized = AuthService.isAuthorized;
  
-  $scope.setCurrentUser = function (user) {
+  $scope.setCurrentUser = function (user, role) {
     $scope.currentUser = user;
+    $scope.role = role;
   };
 })
 
@@ -51,9 +51,21 @@ droneshopControllers
     function($scope, $routeParams, $http, Offer) {
         $scope.offer = Offer.get({offerid: $routeParams.offerid});
         $scope.sendComment = function() {
-            $http.post("offer/"+$routeParams.offerid, {comment: $scope.commentInput});
+            $http.post("offer/"+$routeParams.offerid+"/comment", $scope.commentInput);
             $scope.commentInput = "";
-        }
+        };
+
+        $scope.addToCart = function() {
+            $http.post("offer/"+$routeParams.offerid+"/buy")
+            .success(function() {
+                $scope.accepted = true;
+                $scope.rejected = false;
+            })
+            .error(function() {
+                $scope.rejected = true;
+                $scope.accepted = false;
+            });
+        };
     }])
 
 .controller('RegisterCtrl', ['$scope', 'RegisterService',

@@ -1,64 +1,72 @@
 
-    <!-- Page Content -->
-    <div class="container">
+<!-- Page Content -->
+<div class="container">
 
-        <div class="row">
-            
-            <div class="col-md-3" ng-include="'partials/categories-sidebar.html'"> </div>
+    <div class="row">
+        
+        <div class="col-md-3" ng-include="'partials/categories-sidebar.html'"> </div>
 
-            <div class="col-md-9">
+        <div class="col-md-9">
 
-                <div class="thumbnail">
-                    <img class="img-responsive" src="http://placehold.it/800x300" alt="">
-                    <div class="caption-full">
-                        <h4 class="pull-right">${{offer.price}}</h4>
-                        <h4><a href="#/offer/{{offer.id}}">{{offer.name}}</a>
-                        </h4>
-                        <p>{{offer.description}} </p>
-                        <p>Offer expires: {{offer.expirationDate}}</p>
+            <div class="thumbnail">
+                <img class="img-responsive" src="http://placehold.it/800x300" alt="">
+
+                <div class="alert alert-danger" role="alert" ng-show="rejected">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">error:</span>
+                    There was a problem placing your order
+                </div>
+                
+                <div class="alert alert-success" role="alert" ng-show="accepted">
+                    <span class="sr-only">Success:</span>
+                    You have placed an order
+                </div>
+
+                <div class="caption-full">
+                    <h4 class="pull-right">${{offer.salePrice}} <strike>${{offer.regularPrice}}</strike></h4>
+
+                    <div class="text-right">
+                        <a class="btn btn-success addtocart" ng-click="addToCart()">Add to cart</a>
                     </div>
-                    <div class="ratings">
-                        <p class="pull-right">{{offer.comments.length}} reviews</p>
-                        <p>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            4.0 stars
-                        </p>
+
+                    <h4><a href="#/offer/{{offer.id}}">{{offer.name}}</a>
+                    </h4>
+                    <p>{{offer.description}} </p>
+                    <p>Offer expires: {{offer.expirationDate}}</p>
+                </div>
+                <div class="ratings">
+                    <p class="pull-right">{{offer.comments.length}} reviews</p>
+                </div>
+            </div>
+
+            <div class="well">
+
+                <div class="row">
+                    <div class="text-right">
+                        <a class="btn btn-success" ng-click="sendComment()">Leave a Review</a>
+                    </div>
+
+                    <div> 
+                        <textarea class="form-control" rows="3" id="comment" ng-model="commentInput"> </textarea>
                     </div>
                 </div>
 
-                <div class="well">
+                <hr>
 
+                <div ng-repeat="comment in offer.comments">
                     <div class="row">
-                        <div class="text-right">
-                            <a class="btn btn-success" ng-click="sendComment()">Leave a Review</a>
-                        </div>
-
-                        <div> 
-                            <textarea class="form-control" rows="3" id="comment" ng-model="commentInput"> </textarea>
+                        <div class="col-md-12">
+                            <strong>{{comment.buyer.username}}</strong>
+                            <p>{{comment.message}}</p>
                         </div>
                     </div>
-
-                    <hr>
-
-                    <div ng-repeat="comment in offer.comments">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>{{comment.buyer.username}}</strong>
-                                <p>{{comment.message}}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-
                 </div>
+                <hr>
 
             </div>
 
         </div>
 
     </div>
-    <!-- /.container -->
+
+</div>
