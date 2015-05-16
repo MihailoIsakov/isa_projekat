@@ -103,9 +103,7 @@ public class RESTUtility {
             int id = Integer.parseInt(matcher.group(1));
             return id;
         }
-        System.out.println(restURL+".");
         if (restURL.equals("/") || restURL.equals("")) {
-            System.out.println("All cats");
             return 0;
         }
         else {
@@ -122,5 +120,5 @@ public class RESTUtility {
 
     private static Matcher matcher;
     private static Pattern regexIDPattern = Pattern.compile("/([0-9]+)");
-    private static ObjectMapper mapper = new ObjectMapper();
+    public static ObjectMapper mapper = new ObjectMapper();
 }

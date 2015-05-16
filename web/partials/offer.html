@@ -56,7 +56,7 @@
                 <div ng-repeat="comment in offer.comments">
                     <div class="row">
                         <div class="col-md-12">
-                            <strong>{{comment.buyer.username}}</strong>
+                            <strong>{{comment.buyer.username || 'anonymous'}}</strong>
                             <p>{{comment.message}}</p>
                         </div>
                     </div>

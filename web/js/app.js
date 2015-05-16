@@ -2,7 +2,9 @@
 var droneshopApp = angular.module('droneshopApp', [
         'ngRoute',
         'droneshopControllers',
-        'droneshopServices'
+        'droneshopServices',
+        'xeditable',
+        'ui.bootstrap'
     ]);
 
 droneshopApp.config(['$routeProvider', 
@@ -10,11 +12,11 @@ droneshopApp.config(['$routeProvider',
         $routeProvider.
             when('/', {
                 templateUrl: 'partials/catalog.html',
-                controller: 'CatalogCtrl'
+                controller: 'CategoryCtrl'
             }).
             when('/category/:categoryid', {
                 templateUrl: 'partials/catalog.html',
-                controller: 'CatalogCtrl'
+                controller: 'CategoryCtrl'
             }).
             when('/offer/:offerid', {
                 templateUrl: 'partials/offer.html',
@@ -31,11 +33,18 @@ droneshopApp.config(['$routeProvider',
                 templateUrl: 'partials/register.html',
                 controller: 'RegisterCtrl'
             }).
+            when('/seller/:sellerid', {
+                templateUrl: 'partials/selleroffers.html'
+            }).
             otherwise('/');
     }]);
 
 droneshopApp.config(function($resourceProvider) {
     $resourceProvider.defaults.stripTrailingSlashes = false;
+});
+
+droneshopApp.run(function(editableOptions) {
+    editableOptions.theme = 'bs3';
 });
 
 droneshopApp.constant('AUTH_EVENTS', {

@@ -12,16 +12,20 @@
     <link href="css/shop-homepage.css" rel="stylesheet">
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    
-
     <script src="bower_components/jquery/dist/jquery.js"> </script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"> </script>
     <script src="bower_components/angular/angular.js"> </script>
     <script src="bower_components/angular-route/angular-route.js"> </script>
     <script src="bower_components/angular-resource/angular-resource.js"> </script>
+    
+    <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+    <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
+
     <script src="js/controllers.js"> </script>
     <script src="js/app.js"> </script> 
     <script src="js/services.js"> </script>
+    <script src="js/sellerpagectrl.js"> </script>
 
 </head>
 
@@ -54,9 +58,15 @@
                     <li ng-if='role=="buyer"'>
                         <a ng-href="#/cart">My cart</a>
                     </li>
+
+                    <li ng-if='role=="seller"'>
+                        <a ng-href="#/seller/{{currentUser.id}}">My store</a>
+                    </li>
+
                     <li>
                         <a ng-href="#/" ng-click="logout()">Logout</a>
                     </li>
+
                     <li>
                         <a ng-href="#/user/{{username}}">{{currentUser.username}}</a>
                     </li>

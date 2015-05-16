@@ -1,0 +1,116 @@
+<div ng-controller="OfferCRUDCtrl">
+  <table class="table table-bordered table-hover table-condensed" style="table-layout: fixed">
+    <tr style="font-weight: bold">
+      <td style="width:5%">Offer ID</td>
+      <td>Name</td>
+      <td>Created</td>
+      <td>Expires</td>
+      <td>Valid from</td>
+      <td>Valid to</td>
+      <td style="width:5%">Sale price</td>
+      <td style="width:5%">Price</td>
+      <td style="width:5%">Max offers</td>
+      <td style="width:7%">Purchased</td>
+      <td>Description</td>
+      <td style="width:5%">Active</td>
+      <td>Edit</td>
+    </tr>
+
+    <tr ng-repeat="offer in offers">
+      <!-- Offer ID -->
+      <td>
+        <span e-name="id" e-form="rowform">
+            {{offer.id}}
+        </span>
+      </td>
+
+      <!-- Offer name -->
+      <td>
+        <span editable-text="offer.name" e-form="rowform" e-name="name" e-required>
+          {{ offer.name || 'empty' }}
+        </span>
+      </td>
+
+      <!-- Date created -->
+      <td>
+        {{(offer.dateCreated | date:"dd/MM/yyyy") || 'empty'}}
+      </td>
+
+      <!-- Expiration date -->
+      <td>
+        <span editable-bsdate="offer.expirationDate" e-datepicker-popup="dd-MMMM-yyyy" e-name="expirationDate" e-form="rowform" e-required>
+          {{(offer.expirationDate | date:"dd/MM/yyyy") || 'empty' }}
+        <span>
+      </td>
+
+      <!-- Valid from -->
+      <td>
+        <span editable-bsdate="offer.validFrom" e-datepicker-popup="dd-MMMM-yyyy" e-name="validFrom" e-form="rowform" e-required>
+          {{(offer.validFrom | date:"dd/MM/yyyy") || 'empty' }}
+        <span>
+      </td>
+
+      <!-- Valid to -->
+      <td>
+        <span editable-bsdate="offer.validTo" e-datepicker-popup="dd-MMMM-yyyy" e-name="validTo" e-form="rowform" e-required>
+          {{(offer.validTo | date:"dd/MM/yyyy") || 'empty' }}
+        <span>
+      </td>
+
+      <!-- Sale price -->
+      <td>
+        <span editable-number="offer.salePrice" e-name="salePrice" e-form="rowform" e-required>
+          {{ offer.salePrice || 'empty' }}
+        </span>
+      </td>
+
+      <!-- Regular price -->
+      <td>
+        <span editable-number="offer.regularPrice" e-name="regularPrice" e-form="rowform" e-required>
+          {{ offer.regularPrice || 'empty' }}
+        </span>
+      </td>
+
+      <!-- Max offers -->
+      <td>
+        <span editable-number="offer.maxOffers" e-name="maxOffers" e-form="rowform" e-required>
+          {{ offer.maxOffers || 'empty' }}
+        </span>
+      </td>
+
+      <!-- Purchased offers -->
+      <td>
+          {{offer.purchasedOffers}}
+      </td>
+
+      <!-- Description -->
+      <td>
+        <span editable-text="offer.description" e-name="description" e-form="rowform">
+          {{ offer.description || 'empty' }}
+        </span>
+      </td>
+
+      <td>
+        {{offer.active}}
+      </td>
+
+      <td style="white-space: nowrap">
+        <!-- form -->
+        <form editable-form name="rowform" onbeforesave="saveOffer($data, offer.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == offer">
+          <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+            save
+          </button>
+          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+            cancel
+          </button>
+        </form>
+        <div class="buttons" ng-show="!rowform.$visible">
+          <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+          <button class="btn btn-danger" ng-click="removeOffer($index)">del</button>
+        </div>  
+      </td>
+    </tr>
+  </table>
+
+  <button class="btn btn-default" ng-click="addOffer()">Add row</button>
+</div>

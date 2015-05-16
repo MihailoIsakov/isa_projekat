@@ -67,9 +67,9 @@ droneshopServices.factory('OffersInCategory', ['$resource',
         return $resource('offer/', {category: "@categoryid"});
     }]);
 
-droneshopServices.factory('Category', ['$resource',
-  function($resource){
-    return $resource('category/:categoryid', {}, {
+droneshopServices.factory('Category', ['$resource', '$routeParams',
+  function($resource, $routeParams){
+    return $resource('category/' + $routeParams.categoryid, {}, {
       query: {method:'GET', isArray:true}
     });
   }]);

@@ -1,10 +1,7 @@
 package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet;
 
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.*;
-import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.CategoryDaoLocal;
-import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.CommentDaoLocal;
-import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.OfferDaoLocal;
-import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.PaymentDaoLocal;
+import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session.*;
 import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.utils.RESTUtility;
 
 import javax.ejb.EJB;
@@ -14,7 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zieghailo on 5/12/15.
@@ -34,13 +34,42 @@ public class OfferServlet extends HttpServlet {
     @EJB
     private PaymentDaoLocal paymentDao;
 
+    @EJB
+    private SellerDaoLocal sellerDao;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = request.getPathInfo();
-        int id = RESTUtility.getId(url);
-
-        Offer offer = offerDao.findById(id);
-
         String jsonData = RESTUtility.pullDataFromRequest(request);
+
+        if (url.contains("create")) {
+            Map<String, Object> json = RESTUtility.json2Map(jsonData);
+
+            Offer offer;
+            if (json.containsKey("id")) {
+                offer = offerDao.findById((Integer) json.get("id"));
+                System.out.println(jsonData);
+                System.out.println(offer);
+                System.out.println(RESTUtility.mapper.readerForUpdating(offer).readValues(jsonData).next());
+                System.out.println("merged" + offer);
+                offerDao.merge(offer);
+            }
+            else {
+                offer = new Offer();
+                offer = RESTUtility.mapper.readValue(jsonData, Offer.class);
+                offer.setDateCreated(new Date());
+                offer.setPurchasedOffers(0);
+
+                Seller seller = (Seller) request.getSession().getAttribute("user");
+                offer.setManager(seller);
+                offerDao.persist(offer);
+                System.out.println("persisted");
+            }
+            response.setStatus(200);
+            return;
+        }
+
+        int id = RESTUtility.getId(url);
+        Offer offer = offerDao.findById(id);
 
         // URL: /offer/:offerid/comment
         if (url.contains("comment")) {
@@ -68,31 +97,40 @@ public class OfferServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
 
+            if (request.getParameterMap().containsKey("seller")) {
+                int sellerID = Integer.parseInt(request.getParameter("seller"));
+                Seller seller = sellerDao.findById(sellerID);
+
+                List<Offer> offers = offerDao.findByManager(seller);
+                RESTUtility.flushJson(response, returnActive(offers));
+                return;
+            }
+
             // In case the user specified the category of the offers
             if (request.getParameterMap().containsKey("category")) {
                 int categoryID = Integer.parseInt(request.getParameter("category"));
                 Category category = categoryDao.findById(categoryID);
 
                 List<Offer> offers = offerDao.findByCategory(category);
-
-                RESTUtility.flushJson(response, offers);
+                System.out.println(offers);
+                offers = returnActive(offers);
+                System.out.println(offers);
+                RESTUtility.flushJson(response, returnActive(offers));
                 return;
             }
 
             // Get the rest of the URL
-            int id = RESTUtility.parseURL(request.getPathInfo());
+            try {
+                int id = RESTUtility.getId(request.getPathInfo());
 
-            // In case the user didn't specify the id
-            if (id == 0) {
-                List<Offer> offers = offerDao.findActiveOffers();
-                RESTUtility.flushJson(response, offers);
-                return;
-            }
-
-            // In case he did specify the id
-            else if (id > 0) {
                 Offer offer = offerDao.findById(id);
+                if (offer == null)
+                    response.sendError(404);
                 RESTUtility.flushJson(response, offer);
+                return;
+            } catch (IllegalArgumentException ex) {
+                List<Offer> offers = offerDao.findActiveOffers();
+                RESTUtility.flushJson(response, returnActive(offers));
                 return;
             }
         }
@@ -100,5 +138,13 @@ public class OfferServlet extends HttpServlet {
             ex.printStackTrace();
             response.sendError(400);
         }
+    }
+
+    private static List<Offer> returnActive(List<Offer> offers) {
+        List<Offer> newOffers = new ArrayList<Offer>();
+        for (Offer offer : offers)
+            if(offer.isActive())
+                newOffers.add(offer);
+        return newOffers;
     }
 }

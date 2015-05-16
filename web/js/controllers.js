@@ -39,7 +39,7 @@ droneshopControllers
 
 .controller('CatalogCtrl', ['$scope', '$routeParams', 'OffersInCategory',
     function($scope, $routeParams, OffersInCategory) {
-        $scope.offers = OffersInCategory.query({categoryid: $routeParams.categoryid});
+        $scope.offers = OffersInCategory.query({category: $routeParams.categoryid});
     }])
 
 .controller('CategoryCtrl', 
