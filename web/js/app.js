@@ -62,3 +62,4 @@ droneshopApp.constant('USER_ROLES', {
     editor: 'editor',
     guest: 'guest'
 });
+

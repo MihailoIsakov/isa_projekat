@@ -3,8 +3,10 @@
 var droneshopApp = angular.module('droneshopApp');
 
 droneshopApp.controller('OfferCRUDCtrl', function($scope, $filter, $http, $routeParams, $resource) {
-  $http.get('offer/', {seller: $routeParams.sellerid}).
-    success(function(res) {
+   $scope.sellerid = $routeParams.sellerid;
+
+   $http.get('offer/', {seller: $routeParams.sellerid}).
+   success(function(res) {
       $scope.offers = res;
     });
    $scope.saveOffer= function(data, id) {
@@ -19,15 +21,32 @@ droneshopApp.controller('OfferCRUDCtrl', function($scope, $filter, $http, $route
     $scope.offers.splice(index, 1);
   };
 
+  $scope.categories = [];
+  $scope.loadCategories = function() {
+      return $scope.categories.length ? null : $http.get('category/')
+          .success(function(data) {
+              $scope.categories = data;
+          });
+      };
+
+  $scope.showCategory = function(offer) {
+      if(offer.category && $scope.categories.length) {
+        var selected = $filter('filter')($scope.categories, {id: offer.category});
+        return selected.length ? selected[0].name: 'Not set';
+      } else {
+        return offer.category.name || 'Not set';
+      }
+  };
+
   // add user
   $scope.addOffer= function() {
     $scope.inserted = {
         "id": null,
         "name": "",
-        "dateCreated": null,
-        "expirationDate": null,
-        "validTo": null,
-        "validFrom": null,
+        "dateCreated": new Date(),
+        "expirationDate": new Date(),
+        "validTo": new Date(),
+        "validFrom": new Date(),
         "salePrice": null,
         "maxOffers": null,
         "description": "",

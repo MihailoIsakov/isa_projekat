@@ -97,7 +97,6 @@ public class Offer implements Serializable {
 	@JoinColumn(name = "manager_id", referencedColumnName = "user_id", nullable = false)
 	private Seller manager;
 
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
 	private Category category;

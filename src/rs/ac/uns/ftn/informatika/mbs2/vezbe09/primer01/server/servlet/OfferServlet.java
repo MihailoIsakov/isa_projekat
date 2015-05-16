@@ -45,13 +45,12 @@ public class OfferServlet extends HttpServlet {
             Map<String, Object> json = RESTUtility.json2Map(jsonData);
 
             Offer offer;
-            if (json.containsKey("id")) {
+            if (json.containsKey("id") && json.get("id") != null) {
                 offer = offerDao.findById((Integer) json.get("id"));
                 RESTUtility.mapper.readerForUpdating(offer).readValues(jsonData).next();
                 offerDao.merge(offer);
             }
             else {
-                offer = new Offer();
                 offer = RESTUtility.mapper.readValue(jsonData, Offer.class);
                 offer.setDateCreated(new Date());
                 offer.setPurchasedOffers(0);
@@ -59,7 +58,6 @@ public class OfferServlet extends HttpServlet {
                 Seller seller = (Seller) request.getSession().getAttribute("user");
                 offer.setManager(seller);
                 offerDao.persist(offer);
-                System.out.println("persisted");
             }
             response.setStatus(200);
             return;

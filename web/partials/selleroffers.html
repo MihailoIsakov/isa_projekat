@@ -3,6 +3,7 @@
     <tr style="font-weight: bold">
       <td style="width:5%">Offer ID</td>
       <td>Name</td>
+      <td>Category</td>
       <td>Created</td>
       <td>Expires</td>
       <td>Valid from</td>
@@ -13,7 +14,7 @@
       <td style="width:7%">Purchased</td>
       <td>Description</td>
       <td style="width:5%">Active</td>
-      <td>Edit</td>
+      <td ng-if="role=='seller' && sellerid==currentUser.id">Edit</td>
     </tr>
 
     <tr ng-repeat="offer in offers">
@@ -30,6 +31,13 @@
           {{ offer.name || 'empty' }}
         </span>
       </td>
+
+      <td>
+          <span editable-select="offer.category" e-form="rowform" e-name="category" e-ng-options="c as c.name for c in categories" onshow="loadCategories()">
+              {{showCategory(offer)}}
+          </span>
+      </td>
+
 
       <!-- Date created -->
       <td>
@@ -94,7 +102,7 @@
         {{offer.active}}
       </td>
 
-      <td style="white-space: nowrap">
+      <td style="white-space: nowrap" ng-if="role=='seller' && sellerid==currentUser.id">
         <!-- form -->
         <form editable-form name="rowform" onbeforesave="saveOffer($data, offer.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == offer">
           <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
@@ -112,5 +120,5 @@
     </tr>
   </table>
 
-  <button class="btn btn-default" ng-click="addOffer()">Add row</button>
+  <button class="btn btn-default" ng-click="addOffer()" ng-if="role=='seller' && sellerid==currentUser.id">Add row</button>
 </div>
