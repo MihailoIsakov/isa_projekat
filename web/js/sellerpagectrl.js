@@ -15,7 +15,8 @@ droneshopApp.controller('OfferCRUDCtrl', function($scope, $filter, $http, $route
 
   // remove user
   $scope.removeOffer= function(index) {
-    $scope.offer.splice(index, 1);
+    $http.post('offer/delete', $scope.offers[index]);
+    $scope.offers.splice(index, 1);
   };
 
   // add user

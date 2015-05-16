@@ -47,10 +47,7 @@ public class OfferServlet extends HttpServlet {
             Offer offer;
             if (json.containsKey("id")) {
                 offer = offerDao.findById((Integer) json.get("id"));
-                System.out.println(jsonData);
-                System.out.println(offer);
-                System.out.println(RESTUtility.mapper.readerForUpdating(offer).readValues(jsonData).next());
-                System.out.println("merged" + offer);
+                RESTUtility.mapper.readerForUpdating(offer).readValues(jsonData).next();
                 offerDao.merge(offer);
             }
             else {
@@ -64,6 +61,17 @@ public class OfferServlet extends HttpServlet {
                 offerDao.persist(offer);
                 System.out.println("persisted");
             }
+            response.setStatus(200);
+            return;
+        }
+
+        if (url.contains("delete")) {
+            Map<String, Object> json = RESTUtility.json2Map(jsonData);
+
+            int id = (int) json.get("id");
+            Offer offer = offerDao.findById(id);
+
+            offerDao.remove(offer);
             response.setStatus(200);
             return;
         }
