@@ -26,6 +26,16 @@
       <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.CartServlet</servlet-class>
    </servlet>
 
+   <servlet>
+      <servlet-name>branchServlet</servlet-name>
+      <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.BranchServlet</servlet-class>
+   </servlet>
+
+   <servlet>
+      <servlet-name>sellerServlet</servlet-name>
+      <servlet-class>rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.servlet.SellerServlet</servlet-class>
+   </servlet>
+
    <servlet-mapping>
       <servlet-name>CategoryServlet</servlet-name>
       <url-pattern>/category/*</url-pattern>
@@ -56,7 +66,17 @@
        <url-pattern>/*</url-pattern>
    </servlet-mapping>
 
-   
+   <servlet-mapping>
+      <servlet-name>branchServlet</servlet-name>
+      <url-pattern>/branch/*</url-pattern>
+   </servlet-mapping>
+
+   <servlet-mapping>
+      <servlet-name>sellerServlet</servlet-name>
+      <url-pattern>/seller/*</url-pattern>
+   </servlet-mapping>
+
+
    <welcome-file-list>
    		<welcome-file>/index.html</welcome-file>
    </welcome-file-list>

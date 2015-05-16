@@ -122,3 +122,66 @@
 
   <button class="btn btn-default" ng-click="addOffer()" ng-if="role=='seller' && sellerid==currentUser.id">Add row</button>
 </div>
+
+<hr>
+
+
+<div ng-controller="BranchCRUDCtrl">
+  <table class="table table-bordered table-hover table-condensed" style="table-layout: fixed">
+    <tr style="font-weight: bold">
+      <td style="width:5%">Branch ID</td>
+      <td>Name</td>
+      <td>Address</td>
+      <td>Phone</td>
+      <td ng-if="role=='seller' && sellerid==currentUser.id">Edit</td>
+    </tr>
+
+    <tr ng-repeat="branch in branches">
+      <!-- Branch ID -->
+      <td>
+        <span e-name="id" e-form="rowform">
+            {{branch.id}}
+        </span>
+      </td>
+
+      <!-- Branch name -->
+      <td>
+        <span editable-text="branch.name" e-form="rowform" e-name="name" e-required>
+          {{ branch.name || 'empty' }}
+        </span>
+      </td>
+
+      <!-- Address -->
+      <td>
+        <span editable-text="branch.address" e-name="address" e-form="rowform">
+          {{ branch.address || 'empty' }}
+        </span>
+      </td>
+
+      <td>
+          <span editable-tel="branch.phoneNumber" e-form="rowform" e-name="phoneNumber" e-required>
+              {{branch.phoneNumber || 'empty' }}
+          </span>
+      </td>
+
+
+      <td style="white-space: nowrap" ng-if="role=='seller' && sellerid==currentUser.id">
+        <!-- form -->
+        <form editable-form name="rowform" onbeforesave="saveBranch($data, branch.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == branch">
+          <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+            save
+          </button>
+          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+            cancel
+          </button>
+        </form>
+        <div class="buttons" ng-show="!rowform.$visible">
+          <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+          <button class="btn btn-danger" ng-click="removeBranch($index)">del</button>
+        </div>  
+      </td>
+    </tr>
+  </table>
+
+  <button class="btn btn-default" ng-click="addBranch()" ng-if="role=='seller' && sellerid==currentUser.id">Add row</button>
+</div>

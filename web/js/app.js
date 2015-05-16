@@ -36,6 +36,9 @@ droneshopApp.config(['$routeProvider',
             when('/seller/:sellerid', {
                 templateUrl: 'partials/selleroffers.html'
             }).
+            when('/admin/:adminid', {
+                templateUrl: 'partials/administration.html'
+            }).
             otherwise('/');
     }]);
 

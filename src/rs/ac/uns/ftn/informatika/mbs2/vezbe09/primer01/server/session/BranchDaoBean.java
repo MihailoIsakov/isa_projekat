@@ -1,14 +1,12 @@
 package rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.session;
 
-import java.util.List;
+import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.Branch;
+import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.Seller;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
-
-import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.Branch;
-import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.Offer;
-import rs.ac.uns.ftn.informatika.mbs2.vezbe09.primer01.server.entity.Seller;
+import java.util.List;
 
 @Stateless
 @Local(BranchDaoLocal.class)
@@ -24,10 +22,10 @@ public class BranchDaoBean extends GenericDaoBean<Branch, Integer> implements
 		return result;
 	}
 	//@SuppressWarnings("unchecked")
-	public List<Branch> findByManager(int id) {
+	public List<Branch> findByManager(Seller s) {
 		Query q = em
 			.createNamedQuery("findBranchesByManager");
-		q.setParameter("manager", id);
+		q.setParameter("manager", s);
 		return q.getResultList();
 	}
 }

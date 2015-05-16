@@ -63,6 +63,10 @@
                         <a ng-href="#/seller/{{currentUser.id}}">My store</a>
                     </li>
 
+                    <li ng-if='role=="admin"'>
+                        <a ng-href="#/admin/{{currentUser.id}}">Administration</a>
+                    </li>
+
                     <li>
                         <a ng-href="#/" ng-click="logout()">Logout</a>
                     </li>
